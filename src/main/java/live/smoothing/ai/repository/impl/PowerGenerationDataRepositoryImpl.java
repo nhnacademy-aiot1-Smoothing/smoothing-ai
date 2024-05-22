@@ -21,7 +21,7 @@ public class PowerGenerationDataRepositoryImpl implements PowerGenerationDataRep
 
     private final InfluxDBClient aiInfluxDBClient;
     private final TimeProvider timeProvider;
-    private final String BUCKET = "ai_servce_data";
+    private final static String BUCKET = "ai_servce_data";
 
     @Override
     public List<PowerGenerationData> getPowerGenerationData(String measurement, String field) {
