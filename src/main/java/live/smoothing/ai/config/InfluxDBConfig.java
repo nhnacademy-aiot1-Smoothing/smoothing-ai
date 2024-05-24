@@ -14,7 +14,7 @@ public class InfluxDBConfig {
     private final AiInfluxDBProperties aiInfluxDBProperties;
 
     @Bean
-    public InfluxDBClient aiInfluxDBClient() {
+    public InfluxDBClient influxDBClient() {
         return InfluxDBClientFactory
                 .create(
                         aiInfluxDBProperties.getUrl(),
