@@ -7,4 +7,6 @@ import java.util.List;
 public interface AiService {
 
     List<PredictionDataResponse> getPredictionData(String measurement, String field);
+
+    void saveGeneratorData(String tagValue, double powerData);
 }
