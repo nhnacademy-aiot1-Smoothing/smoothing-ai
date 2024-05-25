@@ -10,4 +10,6 @@ public interface TimeProvider {
     Instant startOfToday();
 
     Instant endOfToday();
+
+    Instant startOfWeek();
 }
