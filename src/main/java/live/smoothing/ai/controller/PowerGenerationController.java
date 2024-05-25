@@ -24,7 +24,7 @@ public class PowerGenerationController {
     public List<InfluxDataResponse> getPowerGenerationData(@RequestParam String measurement,
                                                            @RequestParam String field) {
 
-        return powerGenerationService.getPowerGenerationData(measurement, field);
+        return powerGenerationService.getWeekPowerGenerationData(measurement, field);
     }
 
     @PostMapping("/start")
