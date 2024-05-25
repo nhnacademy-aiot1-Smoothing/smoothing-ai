@@ -10,7 +10,7 @@ import java.time.Instant;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PredictionDataResponse {
+public class InfluxDataResponse {
 
     private Instant time;
     private Double value;

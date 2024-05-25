@@ -8,6 +8,7 @@ import java.time.Instant;
 @Getter
 @NoArgsConstructor
 public class PredictionData {
+
     private Instant time;
     private Double value;
     private String field;

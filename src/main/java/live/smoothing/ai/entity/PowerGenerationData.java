@@ -1,9 +1,7 @@
 package live.smoothing.ai.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.Instant;
 
@@ -12,13 +10,9 @@ import java.time.Instant;
  * 발전 데이터를 저장하는데 사용하고, InfluxDB에서 데이터를 조회할 때 사용합니다.
  */
 @Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class PowerGenerationData {
 
     private Instant time;
     private Double value;
-    private String field;
-    private String measurement;
 }
