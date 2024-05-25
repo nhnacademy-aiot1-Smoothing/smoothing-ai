@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static live.smoothing.ai.util.InfluxUtil.getSearchData;
+import static live.smoothing.ai.util.InfluxUtil.getPredictionData;
 
 @Repository
 @RequiredArgsConstructor
@@ -23,7 +23,7 @@ public class PredictionDataRepositoryImpl implements PredictionDataRepository {
     @Override
     public List<PredictionData> getTodayPredictionData(String measurement, String field) {
 
-        Flux query = getSearchData(
+        Flux query = getPredictionData(
                 BUCKET,
                 measurement,
                 field,

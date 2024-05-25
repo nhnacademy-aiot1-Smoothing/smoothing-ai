@@ -2,7 +2,7 @@ package live.smoothing.ai.task;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import live.smoothing.ai.dto.InfluxDataResponse;
-import live.smoothing.ai.service.AiService;
+import live.smoothing.ai.service.PredictionDataService;
 import live.smoothing.ai.service.PowerGenerationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,7 +20,7 @@ public class ScheduledTasks {
 
     private static final int THREAD_POOL_SIZE = 3;
     private static final int THREAD_SLEEP_MINUTE = 1;
-    private final AiService aiService;
+    private final PredictionDataService aiService;
     private final PowerGenerationService powerGenerationService;
 
     private ExecutorService executorService;
