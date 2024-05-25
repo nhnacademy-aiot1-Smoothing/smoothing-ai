@@ -17,5 +17,7 @@ public interface PowerGenerationDataRepository {
      * @param field 필드 이름  :
      * @return 조회된 발전기 데이터의 리스트
      */
-    List<PowerGenerationData> getPowerGenerationData(String measurement, String field);
+    List<PowerGenerationData> getWeekPowerGenerationData(String measurement, String field);
+
+    void savePowerGenerationData(String measurement, String tag, String tagValue, String field, double powerData);
 }
