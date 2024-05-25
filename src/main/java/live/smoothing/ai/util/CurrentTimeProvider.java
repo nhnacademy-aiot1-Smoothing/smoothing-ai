@@ -25,4 +25,10 @@ public class CurrentTimeProvider implements TimeProvider {
         ZonedDateTime endOfDay = now().toLocalDate().plusDays(1).atTime(0, 0, 0).atZone(SEOUL_ZONE_ID);
         return endOfDay.toInstant();
     }
+
+    @Override
+    public Instant startOfWeek() {
+        ZonedDateTime startOfWeek = now().toLocalDate().minusDays(6).atStartOfDay(SEOUL_ZONE_ID);
+        return startOfWeek.toInstant();
+    }
 }
