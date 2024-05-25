@@ -1,11 +1,11 @@
 package live.smoothing.ai.util;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public interface TimeProvider {
 
-    LocalDateTime now();
+    ZonedDateTime now();
 
     Instant startOfToday();
 

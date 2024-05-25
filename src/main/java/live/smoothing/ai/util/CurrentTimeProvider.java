@@ -10,21 +10,19 @@ public class CurrentTimeProvider implements TimeProvider {
     private static final ZoneId SEOUL_ZONE_ID = ZoneId.of("Asia/Seoul");
 
     @Override
-    public LocalDateTime now() {
-        return LocalDateTime.now();
+    public ZonedDateTime now() {
+        return ZonedDateTime.now(SEOUL_ZONE_ID);
     }
 
     @Override
     public Instant startOfToday() {
-        LocalDateTime startOfDay = LocalDateTime.of(now().toLocalDate(), LocalTime.MIN);
-        ZonedDateTime zonedStartOfDay = startOfDay.atZone(SEOUL_ZONE_ID);
-        return zonedStartOfDay.toInstant();
+        ZonedDateTime startOfDay = now().toLocalDate().atStartOfDay(SEOUL_ZONE_ID);
+        return startOfDay.toInstant();
     }
 
     @Override
     public Instant endOfToday() {
-        LocalDateTime endOfDay = LocalDateTime.of(now().toLocalDate().plusDays(1), LocalTime.of(1, 0));
-        ZonedDateTime zonedEndOfDay = endOfDay.atZone(SEOUL_ZONE_ID);
-        return zonedEndOfDay.toInstant();
+        ZonedDateTime endOfDay = now().toLocalDate().plusDays(1).atTime(0, 0, 0).atZone(SEOUL_ZONE_ID);
+        return endOfDay.toInstant();
     }
 }

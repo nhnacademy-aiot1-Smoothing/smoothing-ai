@@ -13,16 +13,31 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AiServiceImpl implements AiService {
+    private static final String MEASUREMENT_GENERATION = "generation";
+    private static final String TAG_GENERATOR = "generator";
+    private static final String FIELD_CHARGE_POWER = "charge_power";
 
     private final PredictionDataRepository repository;
 
     @Override
     public List<PredictionDataResponse> getPredictionData(String measurement, String field) {
 
-        List<PredictionData> predictionDataList = repository.get24HourPredictionData(measurement, field);
+        List<PredictionData> predictionDataList = repository.getTodayPredictionData(measurement, field);
 
         return predictionDataList.stream()
                 .map(data -> new PredictionDataResponse(data.getTime(), data.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveGeneratorData(String tagValue, double powerData) {
+
+        repository.saveData(
+                MEASUREMENT_GENERATION,
+                TAG_GENERATOR,
+                tagValue,
+                FIELD_CHARGE_POWER,
+                powerData
+        );
     }
 }
