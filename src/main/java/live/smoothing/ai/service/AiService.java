@@ -1,12 +1,9 @@
 package live.smoothing.ai.service;
 
-import live.smoothing.ai.dto.PredictionDataResponse;
-
+import live.smoothing.ai.dto.InfluxDataResponse;
 import java.util.List;
 
 public interface AiService {
 
-    List<PredictionDataResponse> getPredictionData(String measurement, String field);
-
-    void saveGeneratorData(String tagValue, double powerData);
+    List<InfluxDataResponse> getPredictionData(String measurement, String field);
 }

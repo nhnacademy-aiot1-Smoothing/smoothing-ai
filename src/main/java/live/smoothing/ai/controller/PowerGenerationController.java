@@ -1,12 +1,11 @@
 package live.smoothing.ai.controller;
 
-import live.smoothing.ai.dto.PowerGenerationDataResponse;
+import live.smoothing.ai.dto.InfluxDataResponse;
 import live.smoothing.ai.service.PowerGenerationService;
+import live.smoothing.ai.task.ScheduledTasks;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,10 +18,26 @@ import java.util.List;
 public class PowerGenerationController {
 
     private final PowerGenerationService powerGenerationService;
+    private final ScheduledTasks scheduledTasks;
 
     @GetMapping
-    public List<PowerGenerationDataResponse> getPowerGenerationData(@RequestParam String measurement,
-                                                                    @RequestParam String field) {
-        return powerGenerationService.getPowerGenerationData(measurement, field);
+    public List<InfluxDataResponse> getPowerGenerationData(@RequestParam String measurement,
+                                                           @RequestParam String field) {
+
+        return powerGenerationService.getWeekPowerGenerationData(measurement, field);
+    }
+
+    @PostMapping("/start")
+    public ResponseEntity<String> startPowerGeneration() {
+
+        scheduledTasks.startPowerGeneration();
+        return ResponseEntity.ok("발전기 정상 작동");
+    }
+
+    @PostMapping("/stop")
+    public ResponseEntity<String> stopPowerGeneration() {
+
+        scheduledTasks.stopPowerGeneration();
+        return ResponseEntity.ok("발전기 정상 종료");
     }
 }

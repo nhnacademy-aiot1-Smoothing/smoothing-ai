@@ -1,6 +1,6 @@
 package live.smoothing.ai.service.impl;
 
-import live.smoothing.ai.dto.PowerGenerationDataResponse;
+import live.smoothing.ai.dto.InfluxDataResponse;
 import live.smoothing.ai.entity.PowerGenerationData;
 import live.smoothing.ai.repository.PowerGenerationDataRepository;
 import live.smoothing.ai.service.PowerGenerationService;
@@ -18,14 +18,31 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PowerGenerationServiceImpl implements PowerGenerationService {
 
+    private static final String MEASUREMENT_GENERATION = "generation";
+    private static final String TAG_GENERATOR = "generator";
+    private static final String FIELD_CHARGE_POWER = "charge_power";
+
     private final PowerGenerationDataRepository repository;
 
     @Override
-    public List<PowerGenerationDataResponse> getPowerGenerationData(String measurement, String field) {
-        List<PowerGenerationData> powerGenerationDataList = repository.getPowerGenerationData(measurement, field);
+    public List<InfluxDataResponse> getWeekPowerGenerationData(String measurement, String field) {
+
+        List<PowerGenerationData> powerGenerationDataList = repository.getWeekPowerGenerationData(measurement, field);
 
         return powerGenerationDataList.stream()
-                .map(data -> new PowerGenerationDataResponse(data.getTime(), data.getValue()))
+                .map(data -> new InfluxDataResponse(data.getTime(), data.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void savePowerGenerationData(String tagValue, double powerData) {
+
+        repository.savePowerGenerationData(
+                MEASUREMENT_GENERATION,
+                TAG_GENERATOR,
+                tagValue,
+                FIELD_CHARGE_POWER,
+                powerData
+        );
     }
 }

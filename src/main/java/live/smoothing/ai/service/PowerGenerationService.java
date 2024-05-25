@@ -1,6 +1,6 @@
 package live.smoothing.ai.service;
 
-import live.smoothing.ai.dto.PowerGenerationDataResponse;
+import live.smoothing.ai.dto.InfluxDataResponse;
 
 import java.util.List;
 
@@ -9,5 +9,8 @@ import java.util.List;
  */
 
 public interface PowerGenerationService {
-    List<PowerGenerationDataResponse> getPowerGenerationData(String measurement, String field);
+
+    List<InfluxDataResponse> getWeekPowerGenerationData(String measurement, String field);
+
+    void savePowerGenerationData(String tagValue, double powerData);
 }

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "influxdb.ai")
 public class AiInfluxDBProperties {
+
     private String url;
     private String token;
     private String org;

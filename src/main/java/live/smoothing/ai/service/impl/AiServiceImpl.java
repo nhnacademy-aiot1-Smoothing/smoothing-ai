@@ -1,6 +1,6 @@
 package live.smoothing.ai.service.impl;
 
-import live.smoothing.ai.dto.PredictionDataResponse;
+import live.smoothing.ai.dto.InfluxDataResponse;
 import live.smoothing.ai.entity.PredictionData;
 import live.smoothing.ai.repository.PredictionDataRepository;
 import live.smoothing.ai.service.AiService;
@@ -13,31 +13,16 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AiServiceImpl implements AiService {
-    private static final String MEASUREMENT_GENERATION = "generation";
-    private static final String TAG_GENERATOR = "generator";
-    private static final String FIELD_CHARGE_POWER = "charge_power";
 
     private final PredictionDataRepository repository;
 
     @Override
-    public List<PredictionDataResponse> getPredictionData(String measurement, String field) {
+    public List<InfluxDataResponse> getPredictionData(String measurement, String field) {
 
         List<PredictionData> predictionDataList = repository.getTodayPredictionData(measurement, field);
 
         return predictionDataList.stream()
-                .map(data -> new PredictionDataResponse(data.getTime(), data.getValue()))
+                .map(data -> new InfluxDataResponse(data.getTime(), data.getValue()))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void saveGeneratorData(String tagValue, double powerData) {
-
-        repository.saveData(
-                MEASUREMENT_GENERATION,
-                TAG_GENERATOR,
-                tagValue,
-                FIELD_CHARGE_POWER,
-                powerData
-        );
     }
 }

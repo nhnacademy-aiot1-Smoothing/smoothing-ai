@@ -1,8 +1,9 @@
 package live.smoothing.ai.task;
 
 import com.google.common.util.concurrent.AtomicDouble;
-import live.smoothing.ai.dto.PredictionDataResponse;
+import live.smoothing.ai.dto.InfluxDataResponse;
 import live.smoothing.ai.service.AiService;
+import live.smoothing.ai.service.PowerGenerationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,9 +19,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ScheduledTasks {
 
     private static final int THREAD_POOL_SIZE = 3;
-    private static final int THREAD_SLEEP_MINUTE = 5;
-
+    private static final int THREAD_SLEEP_MINUTE = 1;
     private final AiService aiService;
+    private final PowerGenerationService powerGenerationService;
+
     private ExecutorService executorService;
     private AtomicBoolean reachedTarget;
 
@@ -30,10 +32,10 @@ public class ScheduledTasks {
         String measurement = "power_usage";
         String field = "socket_power";
 
-        List<PredictionDataResponse> predictionData = aiService.getPredictionData(measurement, field);
+        List<InfluxDataResponse> predictionData = aiService.getPredictionData(measurement, field);
         double sum = predictionData.stream()
                 .filter(prediction -> prediction.getValue() != null)
-                .mapToDouble(PredictionDataResponse::getValue)
+                .mapToDouble(InfluxDataResponse::getValue)
                 .sum();
 
         double target = sum * 1.1;
@@ -54,13 +56,13 @@ public class ScheduledTasks {
     }
 
     private void generatePowerUntil(int generatorNum, AtomicDouble currentSum, double target) {
-        long millis = THREAD_SLEEP_MINUTE * 60L * 1000L;
+        long millis = THREAD_SLEEP_MINUTE * 1000L;
 
         while (!reachedTarget.get()) {
             double generatedPower = 135;
             currentSum.addAndGet(generatedPower);
 
-            aiService.saveGeneratorData("generator_" + generatorNum, generatedPower);
+            powerGenerationService.savePowerGenerationData("generator_" + generatorNum, generatedPower);
 
             if (currentSum.get() >= target) {
                 reachedTarget.set(true);
