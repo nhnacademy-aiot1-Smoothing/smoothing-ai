@@ -21,10 +21,12 @@ public class PowerGenerationController {
     private final ScheduledTasks scheduledTasks;
 
     @GetMapping
-    public List<InfluxDataResponse> getPowerGenerationData(@RequestParam String measurement,
-                                                           @RequestParam String field) {
+    public ResponseEntity<List<InfluxDataResponse>> getPowerGenerationData(@RequestParam String measurement,
+                                                                           @RequestParam String field) {
 
-        return powerGenerationService.getWeekPowerGenerationData(measurement, field);
+        List<InfluxDataResponse> weekPowerGenerationData = powerGenerationService.getWeekPowerGenerationData(measurement, field);
+
+        return ResponseEntity.ok(weekPowerGenerationData);
     }
 
     @PostMapping("/start")

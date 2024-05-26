@@ -1,7 +1,7 @@
 package live.smoothing.ai.controller;
 
 import live.smoothing.ai.dto.InfluxDataResponse;
-import live.smoothing.ai.service.AiService;
+import live.smoothing.ai.service.PredictionDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +13,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/ai")
-public class AiController {
+public class PredictionDataController {
 
-    private final AiService aiService;
+    private final PredictionDataService aiService;
 
     @GetMapping
     public List<InfluxDataResponse> getDailyPredictedPowerUsage(@RequestParam String measurement,

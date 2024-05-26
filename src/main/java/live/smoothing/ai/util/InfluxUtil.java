@@ -23,11 +23,11 @@ public class InfluxUtil {
      * @param stop            종료 시간
      * @return Flux 쿼리
      */
-    public static Flux getSearchData(String bucketName,
-                                     String measurementName,
-                                     String fieldName,
-                                     Instant start,
-                                     Instant stop
+    public static Flux getPredictionData(String bucketName,
+                                              String measurementName,
+                                              String fieldName,
+                                              Instant start,
+                                              Instant stop
     ) {
         return Flux.from(bucketName)
                 .range(start, stop)
@@ -36,22 +36,41 @@ public class InfluxUtil {
                 .timeShift(9L, ChronoUnit.HOURS);
     }
 
-    public static Flux getTotalSearchData(String bucketName,
-                                          String measurementName,
-                                          String fieldName,
-                                          Instant start,
-                                          Instant stop,
-                                          long every
+    public static Flux getPowerGenerationData(String bucketName,
+                                              String measurementName,
+                                              String fieldName,
+                                              Instant start,
+                                              Instant stop,
+                                              long every
     ) {
         return Flux.from(bucketName)
                 .range(start, stop)
                 .filter(Restrictions.measurement().equal(measurementName))
                 .filter(Restrictions.field().equal(fieldName))
                 .groupBy("charge_power")
-                .aggregateWindow(every, ChronoUnit.HOURS, "sum")
-                .timeShift(9L, ChronoUnit.HOURS);
+                .timeShift(-15L, ChronoUnit.HOURS)
+                .aggregateWindow(every, ChronoUnit.HOURS, "sum");
     }
 
+    public static Flux getActualUseData(String bucketName,
+                                        String phase,
+                                        String location,
+                                        String description,
+                                        Instant start,
+                                        Instant stop,
+                                        long every
+    ) {
+        return Flux.from(bucketName)
+                .range(start, stop)
+                .filter(Restrictions.tag("phase").equal(phase))
+                .filter(Restrictions.or(
+                    Restrictions.tag("location").equal(location + "_1"),
+                    Restrictions.tag("location").equal(location + "_2")))
+                .filter(Restrictions.tag("description").equal(description))
+                .groupBy(description)
+                .timeShift(-15L, ChronoUnit.HOURS)
+                .aggregateWindow(every, ChronoUnit.HOURS, "sum");
+    }
 
     /**
      * InfluxDB에 데이터를 저장히기 위한 Point 객체를 생성한다.

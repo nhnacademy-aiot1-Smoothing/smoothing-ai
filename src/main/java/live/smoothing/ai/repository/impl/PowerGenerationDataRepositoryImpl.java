@@ -28,14 +28,13 @@ public class PowerGenerationDataRepositoryImpl implements PowerGenerationDataRep
     @Override
     public List<PowerGenerationData> getWeekPowerGenerationData(String measurement, String field) {
 
-        Flux query = getTotalSearchData(
+        Flux query = getPowerGenerationData(
                 BUCKET,
                 measurement,
                 field,
                 timeProvider.startOfWeek(), timeProvider.endOfToday(),
                 24L
         );
-
         return influxDBClient.getQueryApi().query(query.toString(), PowerGenerationData.class);
     }
 
