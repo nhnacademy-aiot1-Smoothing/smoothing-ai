@@ -2,6 +2,7 @@ package live.smoothing.ai.task;
 
 import com.google.common.util.concurrent.AtomicDouble;
 import live.smoothing.ai.common.dto.InfluxDataResponse;
+import live.smoothing.ai.generatorlog.service.PowerGeneratorLogService;
 import live.smoothing.ai.prediction.service.PredictionDataService;
 import live.smoothing.ai.generation.service.PowerGenerationService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,9 @@ public class ScheduledTasks {
 
     private static final int THREAD_POOL_SIZE = 3;
     private static final int THREAD_SLEEP_MINUTE = 1;
-    private final PredictionDataService aiService;
+    private final PredictionDataService predictionDataService;
     private final PowerGenerationService powerGenerationService;
+    private final PowerGeneratorLogService powerGeneratorLogService;
 
     private ExecutorService executorService;
     private AtomicBoolean reachedTarget;
@@ -32,7 +34,7 @@ public class ScheduledTasks {
         String measurement = "power_usage";
         String field = "socket_power";
 
-        List<InfluxDataResponse> predictionData = aiService.getPredictionData(measurement, field);
+        List<InfluxDataResponse> predictionData = predictionDataService.getPredictionData(measurement, field);
         double sum = predictionData.stream()
                 .filter(prediction -> prediction.getValue() != null)
                 .mapToDouble(InfluxDataResponse::getValue)
@@ -57,15 +59,19 @@ public class ScheduledTasks {
 
     private void generatePowerUntil(int generatorNum, AtomicDouble currentSum, double target) {
         long millis = THREAD_SLEEP_MINUTE * 1000L;
+        String generatorId = "generator_" + generatorNum;
+
+        powerGeneratorLogService.savePowerGeneratorLog(generatorId, "발전기 동작");
 
         while (!reachedTarget.get()) {
             double generatedPower = 135;
             currentSum.addAndGet(generatedPower);
 
-            powerGenerationService.savePowerGenerationData("generator_" + generatorNum, generatedPower);
+            powerGenerationService.savePowerGenerationData(generatorId, generatedPower);
 
             if (currentSum.get() >= target) {
                 reachedTarget.set(true);
+                powerGeneratorLogService.savePowerGeneratorLog(generatorId, "발전기 정지");
             }
 
             try {
