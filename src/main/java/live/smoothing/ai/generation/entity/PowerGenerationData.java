@@ -1,4 +1,4 @@
-package live.smoothing.ai.entity;
+package live.smoothing.ai.generation.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

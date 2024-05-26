@@ -1,9 +1,8 @@
-package live.smoothing.ai.repository.impl;
+package live.smoothing.ai.actualuse.repository;
 
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.query.dsl.Flux;
-import live.smoothing.ai.entity.ActualUseData;
-import live.smoothing.ai.repository.ActualUseDataRepository;
+import live.smoothing.ai.actualuse.dto.ActualUseData;
 import live.smoothing.ai.util.TimeProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

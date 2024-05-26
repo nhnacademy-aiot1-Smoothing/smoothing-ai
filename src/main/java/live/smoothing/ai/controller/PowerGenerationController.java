@@ -1,7 +1,7 @@
 package live.smoothing.ai.controller;
 
-import live.smoothing.ai.dto.InfluxDataResponse;
-import live.smoothing.ai.service.PowerGenerationService;
+import live.smoothing.ai.common.dto.InfluxDataResponse;
+import live.smoothing.ai.generation.service.PowerGenerationService;
 import live.smoothing.ai.task.ScheduledTasks;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

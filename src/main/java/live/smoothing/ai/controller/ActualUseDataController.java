@@ -1,7 +1,7 @@
 package live.smoothing.ai.controller;
 
-import live.smoothing.ai.dto.InfluxDataResponse;
-import live.smoothing.ai.service.ActualUseDataService;
+import live.smoothing.ai.common.dto.InfluxDataResponse;
+import live.smoothing.ai.actualuse.service.ActualUseDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

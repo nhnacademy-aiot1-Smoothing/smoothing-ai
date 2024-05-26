@@ -1,9 +1,8 @@
-package live.smoothing.ai.service.impl;
+package live.smoothing.ai.prediction.service;
 
-import live.smoothing.ai.dto.InfluxDataResponse;
-import live.smoothing.ai.entity.PredictionData;
-import live.smoothing.ai.repository.PredictionDataRepository;
-import live.smoothing.ai.service.PredictionDataService;
+import live.smoothing.ai.common.dto.InfluxDataResponse;
+import live.smoothing.ai.prediction.entity.PredictionData;
+import live.smoothing.ai.prediction.repository.PredictionDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PredictionDataImpl implements PredictionDataService {
+public class PredictionDataServiceImpl implements PredictionDataService {
 
     private final PredictionDataRepository repository;
 

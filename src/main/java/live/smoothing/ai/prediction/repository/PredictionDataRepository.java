@@ -1,6 +1,6 @@
-package live.smoothing.ai.repository;
+package live.smoothing.ai.prediction.repository;
 
-import live.smoothing.ai.entity.PredictionData;
+import live.smoothing.ai.prediction.entity.PredictionData;
 
 import java.util.List;
 

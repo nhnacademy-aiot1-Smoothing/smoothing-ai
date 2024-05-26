@@ -1,6 +1,6 @@
-package live.smoothing.ai.repository;
+package live.smoothing.ai.actualuse.repository;
 
-import live.smoothing.ai.entity.ActualUseData;
+import live.smoothing.ai.actualuse.dto.ActualUseData;
 
 import java.util.List;
 

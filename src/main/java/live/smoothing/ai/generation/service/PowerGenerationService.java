@@ -1,6 +1,6 @@
-package live.smoothing.ai.service;
+package live.smoothing.ai.generation.service;
 
-import live.smoothing.ai.dto.InfluxDataResponse;
+import live.smoothing.ai.common.dto.InfluxDataResponse;
 
 import java.util.List;
 

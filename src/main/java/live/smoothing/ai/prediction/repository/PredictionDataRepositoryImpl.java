@@ -1,9 +1,8 @@
-package live.smoothing.ai.repository.impl;
+package live.smoothing.ai.prediction.repository;
 
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.query.dsl.Flux;
-import live.smoothing.ai.entity.PredictionData;
-import live.smoothing.ai.repository.PredictionDataRepository;
+import live.smoothing.ai.prediction.entity.PredictionData;
 import live.smoothing.ai.util.TimeProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

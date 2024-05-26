@@ -1,9 +1,9 @@
 package live.smoothing.ai.task;
 
 import com.google.common.util.concurrent.AtomicDouble;
-import live.smoothing.ai.dto.InfluxDataResponse;
-import live.smoothing.ai.service.PredictionDataService;
-import live.smoothing.ai.service.PowerGenerationService;
+import live.smoothing.ai.common.dto.InfluxDataResponse;
+import live.smoothing.ai.prediction.service.PredictionDataService;
+import live.smoothing.ai.generation.service.PowerGenerationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;

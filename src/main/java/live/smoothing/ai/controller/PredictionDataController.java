@@ -1,7 +1,7 @@
 package live.smoothing.ai.controller;
 
-import live.smoothing.ai.dto.InfluxDataResponse;
-import live.smoothing.ai.service.PredictionDataService;
+import live.smoothing.ai.common.dto.InfluxDataResponse;
+import live.smoothing.ai.prediction.service.PredictionDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,10 +1,9 @@
-package live.smoothing.ai.repository.impl;
+package live.smoothing.ai.generation.repository;
 
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.write.Point;
 import com.influxdb.query.dsl.Flux;
-import live.smoothing.ai.entity.PowerGenerationData;
-import live.smoothing.ai.repository.PowerGenerationDataRepository;
+import live.smoothing.ai.generation.entity.PowerGenerationData;
 import live.smoothing.ai.util.TimeProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

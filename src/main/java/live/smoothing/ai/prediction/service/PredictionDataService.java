@@ -1,6 +1,6 @@
-package live.smoothing.ai.service;
+package live.smoothing.ai.prediction.service;
 
-import live.smoothing.ai.dto.InfluxDataResponse;
+import live.smoothing.ai.common.dto.InfluxDataResponse;
 import java.util.List;
 
 public interface PredictionDataService {

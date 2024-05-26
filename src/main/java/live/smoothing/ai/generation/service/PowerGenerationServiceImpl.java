@@ -1,9 +1,8 @@
-package live.smoothing.ai.service.impl;
+package live.smoothing.ai.generation.service;
 
-import live.smoothing.ai.dto.InfluxDataResponse;
-import live.smoothing.ai.entity.PowerGenerationData;
-import live.smoothing.ai.repository.PowerGenerationDataRepository;
-import live.smoothing.ai.service.PowerGenerationService;
+import live.smoothing.ai.common.dto.InfluxDataResponse;
+import live.smoothing.ai.generation.entity.PowerGenerationData;
+import live.smoothing.ai.generation.repository.PowerGenerationDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

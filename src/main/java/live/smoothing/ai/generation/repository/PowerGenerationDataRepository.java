@@ -1,6 +1,6 @@
-package live.smoothing.ai.repository;
+package live.smoothing.ai.generation.repository;
 
-import live.smoothing.ai.entity.PowerGenerationData;
+import live.smoothing.ai.generation.entity.PowerGenerationData;
 
 import java.util.List;
 

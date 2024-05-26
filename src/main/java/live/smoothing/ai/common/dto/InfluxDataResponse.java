@@ -1,4 +1,4 @@
-package live.smoothing.ai.dto;
+package live.smoothing.ai.common.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
