@@ -24,7 +24,7 @@ public class PowerGeneratorLogServiceImpl implements PowerGeneratorLogService {
     @Transactional(readOnly = true)
     public List<PowerGeneratorLogResponse> getPowerGeneratorLogs(String generatorId) {
 
-        List<PowerGeneratorLog> powerGeneratorLogs = powerGeneratorLogRepository.findTop8ByPowerGenerator_GeneratorIdOrderByTimeAsc(generatorId);
+        List<PowerGeneratorLog> powerGeneratorLogs = powerGeneratorLogRepository.findTop6ByPowerGenerator_GeneratorIdOrderByTimeAsc(generatorId);
         return powerGeneratorLogs.stream()
                 .map(data -> new PowerGeneratorLogResponse(data.getTime(), data.getMessage()))
                 .collect(Collectors.toList());
