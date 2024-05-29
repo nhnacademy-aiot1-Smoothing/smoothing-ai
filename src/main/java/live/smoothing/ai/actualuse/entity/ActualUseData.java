@@ -1,4 +1,4 @@
-package live.smoothing.ai.actualuse.dto;
+package live.smoothing.ai.actualuse.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,5 +11,4 @@ public class ActualUseData {
 
     private Instant time;
     private Double value;
-    private String field;
 }
