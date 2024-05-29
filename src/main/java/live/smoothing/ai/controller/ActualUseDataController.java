@@ -22,7 +22,7 @@ public class ActualUseDataController {
     public ResponseEntity<List<InfluxDataResponse>> getActualUseData(@RequestParam String location,
                                                                      @RequestParam String description) {
 
-        List<InfluxDataResponse> weekActualUseData = actualUseDataService.getWeekActualUseData(location, description);
+        List<InfluxDataResponse> weekActualUseData = actualUseDataService.getTodayActualUseData(location, description);
 
         return ResponseEntity.ok(weekActualUseData);
     }

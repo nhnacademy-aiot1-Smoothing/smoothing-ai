@@ -1,10 +1,10 @@
 package live.smoothing.ai.actualuse.repository;
 
-import live.smoothing.ai.actualuse.dto.ActualUseData;
+import live.smoothing.ai.actualuse.entity.ActualUseData;
 
 import java.util.List;
 
 public interface ActualUseDataRepository {
 
-    List<ActualUseData> getWeekActualUseData(String location, String description);
+    List<ActualUseData> getTodayActualUseData(String location, String description);
 }

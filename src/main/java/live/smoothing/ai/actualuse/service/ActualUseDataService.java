@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ActualUseDataService {
 
-    List<InfluxDataResponse> getWeekActualUseData(String location, String description);
+    List<InfluxDataResponse> getTodayActualUseData(String location, String description);
 }

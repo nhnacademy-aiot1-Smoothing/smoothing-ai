@@ -1,7 +1,7 @@
 package live.smoothing.ai.actualuse.service;
 
 import live.smoothing.ai.common.dto.InfluxDataResponse;
-import live.smoothing.ai.actualuse.dto.ActualUseData;
+import live.smoothing.ai.actualuse.entity.ActualUseData;
 import live.smoothing.ai.actualuse.repository.ActualUseDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,14 +16,15 @@ public class ActualUseDataServiceImpl implements ActualUseDataService {
     private final ActualUseDataRepository repository;
 
     @Override
-    public List<InfluxDataResponse> getWeekActualUseData(String location, String description) {
+    public List<InfluxDataResponse> getTodayActualUseData(String location, String description) {
 
-        List<ActualUseData> weekActualUseData = repository.getWeekActualUseData(location, description);
+        List<ActualUseData> todayActualUseData = repository.getTodayActualUseData(location, description);
 
-        return weekActualUseData.stream()
+        return todayActualUseData.stream()
                 .map(data -> {
-                    double roundedValue = Math.round(data.getValue() / 360 * 1000) / 1000.0;
-                    return new InfluxDataResponse(data.getTime(), roundedValue);
-                }).collect(Collectors.toList());
+                    Double calculatedValue = (data.getValue() != null) ? Math.round(data.getValue() / 360 * 1000) / 1000.0 : null;
+                    return new InfluxDataResponse(data.getTime(), calculatedValue);
+                })
+                .collect(Collectors.toList());
     }
 }
