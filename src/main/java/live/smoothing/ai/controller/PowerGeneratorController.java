@@ -21,7 +21,7 @@ public class PowerGeneratorController {
     private final PowerGeneratorService powerGeneratorService;
     private final PowerGeneratorLogService powerGeneratorLogService;
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<List<PowerGeneratorIdResponse>> getPowerGenerators() {
 
         List<PowerGeneratorIdResponse> powerGenerators = powerGeneratorService.getPowerGenerators();
