@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * 발전기 조회 데이터를 반환하는 RESTAPI Controller 입니다.
- */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/power-generation")
@@ -32,14 +29,14 @@ public class PowerGenerationController {
     @PostMapping("/start")
     public ResponseEntity<String> startPowerGeneration() {
 
-        scheduledTasks.startPowerGeneration();
+        scheduledTasks.schedulePowerGenerationStart();
         return ResponseEntity.ok("발전기 정상 작동");
     }
 
     @PostMapping("/stop")
     public ResponseEntity<String> stopPowerGeneration() {
 
-        scheduledTasks.stopPowerGeneration();
+        scheduledTasks.stopGenerators();
         return ResponseEntity.ok("발전기 정상 종료");
     }
 }
