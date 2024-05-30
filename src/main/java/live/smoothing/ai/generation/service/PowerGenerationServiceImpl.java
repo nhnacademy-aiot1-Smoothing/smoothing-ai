@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PowerGenerationServiceImpl implements PowerGenerationService {
 
-    private static final String MEASUREMENT_GENERATION = "generation";
-    private static final String TAG_GENERATOR = "generator";
-    private static final String FIELD_CHARGE_POWER = "charge_power";
+    private static final String MEASUREMENT = "generation";
+    private static final String TAG = "generator";
+    private static final String FIELD = "charge_power";
 
     private final PowerGenerationDataRepository repository;
 
@@ -31,16 +31,17 @@ public class PowerGenerationServiceImpl implements PowerGenerationService {
         return powerGenerationDataList.stream()
                 .map(data -> new InfluxDataResponse(data.getTime(), data.getValue()))
                 .collect(Collectors.toList());
+
     }
 
     @Override
     public void savePowerGenerationData(String tagValue, double powerData) {
 
         repository.savePowerGenerationData(
-                MEASUREMENT_GENERATION,
-                TAG_GENERATOR,
+                MEASUREMENT,
+                TAG,
                 tagValue,
-                FIELD_CHARGE_POWER,
+                FIELD,
                 powerData
         );
     }
