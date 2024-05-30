@@ -2,6 +2,7 @@ package live.smoothing.ai.generation.repository;
 
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.write.Point;
+import com.influxdb.exceptions.InfluxException;
 import com.influxdb.query.dsl.Flux;
 import live.smoothing.ai.generation.entity.PowerGenerationData;
 import live.smoothing.ai.util.TimeProvider;
@@ -49,8 +50,8 @@ public class PowerGenerationDataRepositoryImpl implements PowerGenerationDataRep
 
         try {
             influxDBClient.getWriteApiBlocking().writePoint(BUCKET, ORG, point);
-        } catch (Exception e) {
-            System.err.println("InfluxDB에 데이터 저장 실패 : " + e.getMessage());
+        } catch (InfluxException e) {
+            throw new InfluxException(e);
         }
     }
 }
