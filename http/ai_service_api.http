@@ -1,0 +1,33 @@
+### 콘센트 예측 사용 전력량 조회
+GET http://localhost:8021/api/ai?
+    measurement=power_usage&
+    field=socket_power
+Content-Type: application/json
+
+### 콘센트 실제 사용 전력량 조회
+GET http://localhost:8021/api/actual-use-data?
+    location=class_a_floor_heating&
+    description=w
+Content-Type: application/json
+
+### 발전기 수동 동작
+POST http://localhost:8021/api/power-generation/start
+Content-Type: application/json
+
+### 발전기 수동 정지
+POST http://localhost:8021/api/power-generation/stop
+Content-Type: application/json
+
+### 발전량 조회
+GET http://localhost:8021/api/power-generation?
+    measurement=generation&
+    field=charge_power
+Content-Type: application/json
+
+### 발전기 목록
+GET http://localhost:8021/api/power-generator/list
+Content-Type: application/json
+
+### 발전기 로그 조회 (최근 목록 6개만)
+GET http://localhost:8021/api/power-generator/log?generatorId=generator_1
+Content-Type: application/json

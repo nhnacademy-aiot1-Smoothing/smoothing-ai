@@ -1,91 +1,69 @@
 package live.smoothing.ai.task;
 
-import com.google.common.util.concurrent.AtomicDouble;
-import live.smoothing.ai.dto.InfluxDataResponse;
-import live.smoothing.ai.service.PredictionDataService;
-import live.smoothing.ai.service.PowerGenerationService;
+import live.smoothing.ai.common.dto.InfluxDataResponse;
+import live.smoothing.ai.generation.service.PowerGenerationService;
+import live.smoothing.ai.generator.util.GeneratorControl;
+import live.smoothing.ai.generator.util.VirtualGenerator;
+import live.smoothing.ai.generatorlog.service.PowerGeneratorLogService;
+import live.smoothing.ai.prediction.service.PredictionDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PreDestroy;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
 @RequiredArgsConstructor
 public class ScheduledTasks {
 
-    private static final int THREAD_POOL_SIZE = 3;
-    private static final int THREAD_SLEEP_MINUTE = 1;
-    private final PredictionDataService aiService;
-    private final PowerGenerationService powerGenerationService;
+    private final PredictionDataService predictionDataService;
+    private final PowerGenerationService generationService;
+    private final PowerGeneratorLogService generatorLogService;
+    private final GeneratorControl generatorControl;
 
-    private ExecutorService executorService;
-    private AtomicBoolean reachedTarget;
+    private VirtualGenerator generator1;
+    private VirtualGenerator generator2;
+    private VirtualGenerator generator3;
 
     @Scheduled(cron = "0 0 1 * * ?")
-    public void startPowerGeneration() {
+    public void schedulePowerGenerationStart() {
+
+        double target = calculateTarget();
+        initializeGenerators(target);
+        startGenerators();
+    }
+
+    private double calculateTarget() {
 
         String measurement = "power_usage";
         String field = "socket_power";
-
-        List<InfluxDataResponse> predictionData = aiService.getPredictionData(measurement, field);
+        List<InfluxDataResponse> predictionData = predictionDataService.getPredictionData(measurement, field);
         double sum = predictionData.stream()
                 .filter(prediction -> prediction.getValue() != null)
                 .mapToDouble(InfluxDataResponse::getValue)
                 .sum();
-
-        double target = sum * 1.1;
-
-        AtomicDouble currentSum = new AtomicDouble(0.0);
-        executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
-        reachedTarget = new AtomicBoolean(false);
-
-        for (int i = 0; i < THREAD_POOL_SIZE; i++) {
-            int generatorNum = i;
-            executorService.submit(() -> generatePowerUntil(generatorNum, currentSum, target));
-        }
+        return sum * 1.1;
     }
 
-    public void stopPowerGeneration() {
-        reachedTarget.set(true);
-        executorService.shutdown();
+    private void initializeGenerators(double target) {
+
+        generatorControl.reset();
+        generator1 = new VirtualGenerator(1, target, generatorControl, generationService, generatorLogService);
+        generator2 = new VirtualGenerator(2, target, generatorControl, generationService, generatorLogService);
+        generator3 = new VirtualGenerator(3, target, generatorControl, generationService, generatorLogService);
     }
 
-    private void generatePowerUntil(int generatorNum, AtomicDouble currentSum, double target) {
-        long millis = THREAD_SLEEP_MINUTE * 1000L;
+    private void startGenerators() {
 
-        while (!reachedTarget.get()) {
-            double generatedPower = 135;
-            currentSum.addAndGet(generatedPower);
-
-            powerGenerationService.savePowerGenerationData("generator_" + generatorNum, generatedPower);
-
-            if (currentSum.get() >= target) {
-                reachedTarget.set(true);
-            }
-
-            try {
-                Thread.sleep(millis);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
+        generator1.start();
+        generator2.start();
+        generator3.start();
     }
 
-    @PreDestroy
-    public void cleanUp() {
-        executorService.shutdown();
-        try {
-            if (!executorService.awaitTermination(60, java.util.concurrent.TimeUnit.SECONDS)) {
-                executorService.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            executorService.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
+    public void stopGenerators() {
+
+        generator1.stop();
+        generator2.stop();
+        generator3.stop();
     }
 }

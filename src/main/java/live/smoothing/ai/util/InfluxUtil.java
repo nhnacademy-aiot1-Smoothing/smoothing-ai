@@ -68,7 +68,7 @@ public class InfluxUtil {
                     Restrictions.tag("location").equal(location + "_2")))
                 .filter(Restrictions.tag("description").equal(description))
                 .groupBy(description)
-                .timeShift(-15L, ChronoUnit.HOURS)
+                .timeShift(8L, ChronoUnit.HOURS)
                 .aggregateWindow(every, ChronoUnit.HOURS, "sum");
     }
 
