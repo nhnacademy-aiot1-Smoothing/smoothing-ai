@@ -1,5 +1,7 @@
 package live.smoothing.ai.generator.util;
 
+import live.smoothing.ai.common.ErrorCode;
+import live.smoothing.ai.common.exception.ServiceException;
 import live.smoothing.ai.generation.service.PowerGenerationService;
 import live.smoothing.ai.generatorlog.service.PowerGeneratorLogService;
 
@@ -37,7 +39,11 @@ public class VirtualGenerator implements Runnable {
     }
 
     private void preprocess() {
-        generatorLogService.savePowerGeneratorLog(generatorId, "발전기 동작");
+        try {
+            generatorLogService.savePowerGeneratorLog(generatorId, "발전기 동작");
+        } catch (Exception e) {
+            throw new ServiceException(ErrorCode.SAVE_FAIL);
+        }
     }
 
     private void process() {
@@ -49,7 +55,11 @@ public class VirtualGenerator implements Runnable {
     }
 
     private void postprocess() {
-        generatorLogService.savePowerGeneratorLog(generatorId, "발전기 정지");
+        try {
+            generatorLogService.savePowerGeneratorLog(generatorId, "발전기 정지");
+        } catch (Exception e) {
+            throw new ServiceException(ErrorCode.SAVE_FAIL);
+        }
     }
 
     @Override
