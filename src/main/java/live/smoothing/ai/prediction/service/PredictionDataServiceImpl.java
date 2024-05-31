@@ -21,7 +21,7 @@ public class PredictionDataServiceImpl implements PredictionDataService {
         List<PredictionData> predictionDataList = repository.getTodayPredictionData(measurement, field);
 
         return predictionDataList.stream()
-                .map(data -> new InfluxDataResponse(data.getTime(), data.getValue()))
+                .map(data -> new InfluxDataResponse(data.getTime(), (double) Math.round(data.getValue())))
                 .collect(Collectors.toList());
     }
 }

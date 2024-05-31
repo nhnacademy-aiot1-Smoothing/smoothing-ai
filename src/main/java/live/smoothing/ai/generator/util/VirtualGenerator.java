@@ -7,7 +7,7 @@ import live.smoothing.ai.generatorlog.service.PowerGeneratorLogService;
 
 public class VirtualGenerator implements Runnable {
 
-    private static final long DEFAULT_INTERVAL = 5000;
+    private static final long DEFAULT_INTERVAL = 300000;
     private static final double GENERATED_POWER = 135;
 
     private final PowerGenerationService generationService;

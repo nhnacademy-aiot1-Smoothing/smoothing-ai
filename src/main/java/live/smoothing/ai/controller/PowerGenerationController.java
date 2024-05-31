@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/power-generation")
+@RequestMapping("/api/ai/power-generation")
 public class PowerGenerationController {
 
     private final PowerGenerationService powerGenerationService;
