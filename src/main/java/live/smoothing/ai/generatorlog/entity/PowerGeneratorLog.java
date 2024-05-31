@@ -20,8 +20,8 @@ public class PowerGeneratorLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long logId;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "generator_id", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "generator_id")
     private PowerGenerator powerGenerator;
 
     @NotNull
