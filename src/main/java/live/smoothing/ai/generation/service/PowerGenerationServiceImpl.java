@@ -29,7 +29,7 @@ public class PowerGenerationServiceImpl implements PowerGenerationService {
         List<PowerGenerationData> powerGenerationDataList = repository.getWeekPowerGenerationData(measurement, field);
 
         return powerGenerationDataList.stream()
-                .map(data -> new InfluxDataResponse(data.getTime(), data.getValue()))
+                .map(data -> new InfluxDataResponse(data.getTime(), data.getValue() != null ? data.getValue() : 0.0))
                 .collect(Collectors.toList());
 
     }
