@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/actual-use-data")
+@RequestMapping("/api/ai/actual-use-data")
 public class ActualUseDataController {
 
     private final ActualUseDataService actualUseDataService;
