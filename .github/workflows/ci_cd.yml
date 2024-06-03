@@ -50,5 +50,5 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script_stop: true
-        script: "./start.sh"
+        script: "~/start.sh"
         timeout: '10m'
