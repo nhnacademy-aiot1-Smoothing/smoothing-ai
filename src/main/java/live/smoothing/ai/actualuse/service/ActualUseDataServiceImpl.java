@@ -24,9 +24,10 @@ public class ActualUseDataServiceImpl implements ActualUseDataService {
         List<ActualUseData> todayActualUseData = repository.getTodayActualUseData(location, description);
 
         Map<Instant, Double> hourlySum = todayActualUseData.stream()
+                .filter(data -> data.getValue() != null)
                 .collect(Collectors.groupingBy(
                         data -> data.getTime().truncatedTo(ChronoUnit.HOURS),
-                        Collectors.summingDouble(data -> data.getValue() != null ? data.getValue() : 0.0)
+                        Collectors.summingDouble(ActualUseData::getValue)
                 ));
 
         return hourlySum.entrySet().stream()
