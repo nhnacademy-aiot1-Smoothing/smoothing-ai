@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>live.smoothing</groupId>
-	<artifactId>ai_service</artifactId>
+	<artifactId>ai-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ai</name>
 	<description>Demo project for Spring Boot</description>
