@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PowerGeneratorLogRepository extends JpaRepository<PowerGeneratorLog, Long> {
 
-    List<PowerGeneratorLog> findTop6ByPowerGenerator_GeneratorIdOrderByTimeAsc(String generatorId);
+    List<PowerGeneratorLog> findTop6ByPowerGenerator_GeneratorIdOrderByTimeDesc(String generatorId);
 }

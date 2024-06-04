@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,10 @@ public class PowerGeneratorLogServiceImpl implements PowerGeneratorLogService {
     @Transactional(readOnly = true)
     public List<PowerGeneratorLogResponse> getPowerGeneratorLogs(String generatorId) {
 
-        List<PowerGeneratorLog> powerGeneratorLogs = powerGeneratorLogRepository.findTop6ByPowerGenerator_GeneratorIdOrderByTimeAsc(generatorId);
+        List<PowerGeneratorLog> powerGeneratorLogs = powerGeneratorLogRepository.findTop6ByPowerGenerator_GeneratorIdOrderByTimeDesc(generatorId);
+
+        powerGeneratorLogs.sort(Comparator.comparing(PowerGeneratorLog::getTime));
+
         return powerGeneratorLogs.stream()
                 .map(data -> new PowerGeneratorLogResponse(data.getTime(), data.getMessage()))
                 .collect(Collectors.toList());
