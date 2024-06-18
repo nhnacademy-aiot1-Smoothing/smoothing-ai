@@ -50,7 +50,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         script: |
           sudo docker build -t ai-service:latest ./ --build-arg FILE=target/ai-service-0.0.1-SNAPSHOT.jar
-          containers=$(sudo docker ps -a | grep sensor-data | awk '{print $1}')
+          containers=$(sudo docker ps -a | grep ai | awk '{print $1}')
           if [ -n "$containers" ]; then
             sudo docker stop $containers
             sudo docker rm $containers
